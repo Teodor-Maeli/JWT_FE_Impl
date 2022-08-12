@@ -1,0 +1,16 @@
+.form {
+  position: relative;
+  text-align: center;
+  top: 30%;
+  width: 30%;
+  left: 35%
+}
+
+input {
+  text-align: center;
+  border: 2px solid #ffa8a8;
+  position: relative;
+  left: 25%;
+  width: 50%;
+  cursor: pointer;
+}
