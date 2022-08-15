@@ -11,7 +11,7 @@ export class ClientsService {
   constructor(private http: HttpClient) {
   }
 
-  private loginUrl: string = 'http://localhost:8080/clients';
+  private loginUrl: string = 'https://spring-boot-heroku-clients.herokuapp.com/clients';
 
 
   
@@ -20,6 +20,6 @@ export class ClientsService {
     let headers = new HttpHeaders({
       'Authorization': 'Bearer '+(localStorage.getItem('accessToken')),
     });
-    return this.http.get<any>(this.loginUrl,{headers:headers});
+    return this.http.get<any>(this.loginUrl);
   }
 }

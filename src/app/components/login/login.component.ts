@@ -12,7 +12,7 @@ import { LoginService } from '../../services/login.service';
 export class LoginComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, private loginService: LoginService) { }
 
-  loggedIn:boolean = true;
+  loggedIn: boolean = true;
 
 
   ngOnInit(): void {
@@ -29,15 +29,21 @@ export class LoginComponent implements OnInit {
 
   sendRequest() {
     this.loginService.login(this.loginForm.controls['username'].value, this.loginForm.controls['password'].value);
-    
-    setTimeout(() => this.ifLogin(),500)
-    setTimeout(() => window.location.reload(),500)
+
+    let interval = setInterval(() => {
+      let token = localStorage.getItem('accessToken');
+      if (token !== null) {
+        this.ifLogin();
+        window.location.reload()
+        clearInterval(interval);
+      }
+    }, 500)
   }
 
-  ifLogin(){
-    if(localStorage.getItem('username') !==null){
+  ifLogin() {
+    if (localStorage.getItem('username') !== null) {
       this.loggedIn = false;
-    }else{
+    } else {
       this.loggedIn = true;
     }
   }
