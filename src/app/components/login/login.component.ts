@@ -1,6 +1,6 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component,OnInit } from '@angular/core';
 import { FormControl, FormBuilder } from '@angular/forms';
-import { AppComponent } from '../../app.component';
+import { EventService } from 'src/app/services/event.service';
 import { LoginService } from '../../services/login.service';
 
 
@@ -10,13 +10,20 @@ import { LoginService } from '../../services/login.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  constructor(private formBuilder: FormBuilder, private loginService: LoginService) { }
+  constructor(private formBuilder: FormBuilder, private loginService: LoginService, private eventService: EventService) { }
 
   loggedIn: boolean = true;
 
 
   ngOnInit(): void {
     this.ifLogin()
+    this.eventService.logOutAttempt().subscribe((event) => {
+      setTimeout(() => {
+        this.loggedIn = true;
+      },500);
+
+    });
+
 
   }
 
@@ -27,21 +34,21 @@ export class LoginComponent implements OnInit {
   });
 
 
-  sendRequest() {
+  loggingIn() {
     this.loginService.login(this.loginForm.controls['username'].value, this.loginForm.controls['password'].value);
 
     let interval = setInterval(() => {
-      let token = localStorage.getItem('accessToken');
-      if (token !== null) {
+      const ACCESS_TOKEN = sessionStorage.getItem('ACCESS_TOKEN');
+      if (ACCESS_TOKEN !== null) {
         this.ifLogin();
         window.location.reload()
         clearInterval(interval);
       }
-    }, 500)
+    })
   }
 
   ifLogin() {
-    if (localStorage.getItem('username') !== null) {
+    if (sessionStorage.getItem('username') !== null) {
       this.loggedIn = false;
     } else {
       this.loggedIn = true;

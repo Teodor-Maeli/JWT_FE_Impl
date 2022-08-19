@@ -1,10 +1,9 @@
-<nav class="">
+<mat-toolbar *ngIf="loggedIn">
     <div class="buttons">
-        <button *ngIf="loggedIn"  class="mr-2" routerLink="/clients">CLIENTS</button>
-        <button *ngIf="loggedIn"(click)="logoutAttempt()">LOGOUT</button>
-       </div>
-       <div class="logged font-bold neonText " *ngIf="loggedIn">Logged in as<h2 class="neonText">{{name}}</h2></div>
-</nav>
+        <button mat-raised-button class="mr-2" routerLink="/clients">CLIENTS</button>
+        <button mat-raised-button (click)="logoutAttempt()">LOGOUT</button>
+    </div>
+    <div class="logged font-bold neonText ">Logged in as<h2 class="neonText">{{name}}</h2>
+    </div>
+</mat-toolbar>
 <router-outlet></router-outlet>
-
-

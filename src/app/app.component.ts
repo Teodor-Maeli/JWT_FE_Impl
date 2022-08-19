@@ -1,5 +1,9 @@
-import { Component } from '@angular/core';
+import { outputAst } from '@angular/compiler';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { Router } from '@angular/router';
+import { timeout } from 'rxjs';
+import { EventService } from './services/event.service';
+
 
 
 @Component({
@@ -13,16 +17,13 @@ export class AppComponent {
 
 
 
-  constructor(private router: Router) {
-
-
+  constructor(private router: Router, private eventService: EventService) {
   }
 
   ngOnInit() {
-    this.name = JSON.stringify(localStorage.getItem('username'));
+    this.name = JSON.stringify(sessionStorage.getItem('username'));
     this.logged()
   }
-
 
   logged(): void {
 
@@ -34,11 +35,12 @@ export class AppComponent {
 
   }
 
-
   logoutAttempt() {
+    this.loggedIn = false;
+    this.eventService.loggedOut.next(true);
+    timeout(1000);
     this.router.navigate(['']);
-    setTimeout(() => { window.location.reload(); }, 200)
-    localStorage.clear();
+    sessionStorage.clear();
 
   }
 

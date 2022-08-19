@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpBackend, HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { REFRESH_TOKEN } from '../interfaces/authTokens';
 
 
 @Injectable({
@@ -7,9 +9,12 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class LoginService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private jwtHelper: JwtHelperService) {
 
-  private loginUrl: string = 'https://spring-boot-heroku-clients.herokuapp.com/login';
+  }
+
+
+  private loginUrl: string = 'http://localhost:8081/login';
 
   login(username: any, password: any) {
     let headers = new HttpHeaders({
@@ -17,11 +22,14 @@ export class LoginService {
       'password': password
     });
 
-     return this.http.post<any>(this.loginUrl,null,{observe:'response',headers: headers}).subscribe((response:any) => {
-       localStorage.setItem("accessToken",response.headers.get('AccessToken'))
-       localStorage.setItem("refreshToken",response.headers.get('refreshToken'))
-       localStorage.setItem('username',username)
+    return this.http.post<any>(this.loginUrl, null, { observe: 'response', headers: headers }).subscribe((response: any) => {
+
+      sessionStorage.setItem("ACCESS_TOKEN", response.headers.get('ACCESS_TOKEN'))
+      sessionStorage.setItem("REFRESH_TOKEN", response.headers.get('REFRESH_TOKEN'))
+      sessionStorage.setItem('username', username)
     });
   }
+
+
 
 }

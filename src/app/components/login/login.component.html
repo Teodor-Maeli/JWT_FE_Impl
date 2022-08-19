@@ -1,8 +1,10 @@
-<div class="form"*ngIf="loggedIn">
-    <h1>Login</h1>
-    <form class="flex flex-col"[formGroup]="loginForm" (ngSubmit)="sendRequest()">
-        <input type="text" placeholder="NAME"formControlName="username">
-        <input type="text" placeholder="DURATION"formControlName="password">
-        <input type="submit" class="p-2 w-full submit" value="SUBMIT">
-    </form>
+<div class="form" *ngIf="loggedIn">
+    <div class="login">
+        <h1>Login</h1>
+        <form method="post" [formGroup]="loginForm" (ngSubmit)="loggingIn();" >
+            <input type="text" name="u" placeholder="Username" required="required" formControlName="username" />
+            <input type="password" name="p" placeholder="Password" required="required" formControlName="password" />
+            <button type="submit" class="btn btn-primary btn-block btn-large">Let me in.</button>
+        </form>
+    </div>
 </div>

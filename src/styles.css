@@ -9,8 +9,7 @@ body {
     margin: 0;
     height: 100%;
     font-family: Roboto, "Helvetica Neue", sans-serif;
-    background: rgb(198, 63, 251);
-    background: radial-gradient(circle, rgba(198, 63, 251, 1) 33%, rgba(255, 29, 75, 1) 100%);
+    background-image: linear-gradient(to right top, #d16ba5, #c777b9, #ba83ca, #aa8fd8, #9a9ae1, #8aa7ec, #79b3f4, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1);
 }
 
 
@@ -22,4 +21,10 @@ body {
 body {
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.mat-raised-button {
+    background-color: #d51e5e;
+    color:white;
+    margin-right:2px!important;
 }
