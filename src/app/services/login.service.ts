@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpBackend, HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
-import { JwtHelperService } from '@auth0/angular-jwt';
-import { REFRESH_TOKEN } from '../interfaces/authTokens';
+import { HttpClient, HttpHeaders} from '@angular/common/http';
+
 
 
 @Injectable({
@@ -9,7 +8,7 @@ import { REFRESH_TOKEN } from '../interfaces/authTokens';
 })
 export class LoginService {
 
-  constructor(private http: HttpClient, private jwtHelper: JwtHelperService) {
+  constructor(private http: HttpClient) {
 
   }
 
@@ -22,11 +21,13 @@ export class LoginService {
       'password': password
     });
 
-    return this.http.post<any>(this.loginUrl, null, { observe: 'response', headers: headers }).subscribe((response: any) => {
-
-      sessionStorage.setItem("ACCESS_TOKEN", response.headers.get('ACCESS_TOKEN'))
-      sessionStorage.setItem("REFRESH_TOKEN", response.headers.get('REFRESH_TOKEN'))
-      sessionStorage.setItem('username', username)
+    return this.http.post<any>(this.loginUrl, null, { observe: 'response', headers: headers}).subscribe((res:any) =>{
+      sessionStorage.setItem('username',res.headers.get('username'));
+      if(sessionStorage.getItem('username')!==null){
+        setTimeout(()=>{
+          window.location.reload();
+        },500);
+      }
     });
   }
 

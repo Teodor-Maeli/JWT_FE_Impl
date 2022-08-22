@@ -37,14 +37,6 @@ export class LoginComponent implements OnInit {
   loggingIn() {
     this.loginService.login(this.loginForm.controls['username'].value, this.loginForm.controls['password'].value);
 
-    let interval = setInterval(() => {
-      const ACCESS_TOKEN = sessionStorage.getItem('ACCESS_TOKEN');
-      if (ACCESS_TOKEN !== null) {
-        this.ifLogin();
-        window.location.reload()
-        clearInterval(interval);
-      }
-    })
   }
 
   ifLogin() {
